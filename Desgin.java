@@ -18,10 +18,7 @@ public class Desgin {
 	 
 			private static JLabel l1 = new JLabel("0");
 
-			private double x=0,y=0,i=0;
-			private int flag=0;
-			private double answer=0 ;
-			private char exp;
+			
 			
 			
 			public static void main(String [] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
@@ -34,19 +31,19 @@ public class Desgin {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			JFrame frame=new JFrame("Amour");
 			frame.setVisible(true);
-			frame.setSize(1000,1000);
-			frame.setResizable(false);
+			frame.setSize(500,600);
+			frame.setResizable(true);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			JPanel p=new JPanel();
 	        p.setLayout(null);
 			frame.add(p);
 			l1.setFont(new Font("0", 5, 40));
-			l1.setBounds(5,0,750,100);
+			l1.setBounds(5,0,300,100);
 			l1.setHorizontalAlignment(SwingConstants.RIGHT);
 			l1.setVisible(true);
 				
 			p.add(l1);
-
+			
 			JButton b1=new JButton("1");
 			b1.setBackground(Color.BLACK);
 			b1.setBounds(10, 180, 75, 75);
@@ -108,12 +105,26 @@ public class Desgin {
 			JButton bmulti=new JButton("x");
 			bmulti.setBounds(250, 340, 75, 75);
 			p.add(bmulti);
-			JButton bdiv=new JButton("/");
-			bdiv.setBounds(250, 420, 75, 75);
+			JButton bdiv=new JButton("÷");
+			bdiv.setBounds(250, 100, 75, 75);
 			p.add(bdiv);
 			JButton bans=new JButton("=");
-			bans.setBounds(250, 500, 75, 75);
+			bans.setBounds(250, 420, 75, 75);
 			p.add(bans);
+			JButton bdot=new JButton(".");
+			bdot.setBounds(170, 420, 75, 75);
+			p.add(bdot);
+			JButton bclear=new JButton("<-");
+			bclear.setBounds(170, 100, 75, 75);
+			p.add(bclear);
+			JButton bclearAll=new JButton("C");
+			bclearAll.setBounds(90, 100, 75, 75);
+			p.add(bclearAll);
+			JButton bsign=new JButton("+/-");
+			bsign.setBounds(10, 100, 75, 75);
+			p.add(bsign);
+			
+			
 			
 			
 			
