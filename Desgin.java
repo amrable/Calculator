@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Stack;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,10 +17,12 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class Desgin extends JFrame implements ActionListener {
 
 	private JLabel l1 = new JLabel("0");
+	private JLabel l2 = new JLabel("No History");
 	private String x="",y="";
-	private int flag=0;
+	private int flag=0,i=0,top=-1;
 	private double answer=0 ;
-	private String exp="z";		
+	private String exp="z",operation="";
+	private String[] history=new String[100];
 	public static void main (String[]args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		
 
@@ -30,20 +33,35 @@ public class Desgin extends JFrame implements ActionListener {
 
 		super("Amour");
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		setSize(600,600);
+		setSize(700,600);
 		setResizable(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		JPanel p=new JPanel();
-		p.setBackground(Color.GRAY);
 
         p.setLayout(null);
 		add(p);
 		l1.setFont(new Font("0", 5, 40));
-		l1.setBounds(5,0,300,100);
+		l1.setBounds(50,0,250,100);
 		l1.setHorizontalAlignment(SwingConstants.RIGHT);
 		l1.setVisible(true);
 		p.add(l1);
-		
+		l2.setFont(new Font("0", 5, 40));
+		l2.setBounds(300,110,250,100);
+		l2.setHorizontalAlignment(SwingConstants.CENTER);
+		l2.setVisible(true);
+		p.add(l2);
+		JLabel l3 = new JLabel("History");
+		l3.setFont(new Font("0", 5, 20));
+		l3.setBounds(300,0,250,100);
+		l3.setHorizontalAlignment(SwingConstants.CENTER);
+		l3.setVisible(true);
+		p.add(l3);
+		JButton bnext=new JButton("next");
+		bnext.setBounds(10, 0, 100, 50);
+		p.add(bnext);
+		JButton bprev=new JButton("prev");
+		bprev.setBounds(10, 50, 100, 50);
+		p.add(bprev);
 		JButton b1=new JButton("1");
 		b1.setBackground(Color.BLACK);
 		b1.setBounds(10, 180, 75, 75);
@@ -140,12 +158,14 @@ public class Desgin extends JFrame implements ActionListener {
 		bmulti.addActionListener(this);
 		bdiv.addActionListener(this);
 		bclearAll.addActionListener(this);
-		bdot.addActionListener(this);
+		bnext.addActionListener(this);
+		bprev.addActionListener(this);
 		
 	}
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 
+		
 		String test = arg0.getActionCommand();
 
 		if(test=="0"||test=="1"||test=="2"||test=="3"||test=="4"||test=="5"||test=="6"||test=="7"||test=="8"||test=="9")
@@ -169,7 +189,7 @@ public class Desgin extends JFrame implements ActionListener {
 			
 		}
 		if(test=="÷"&&flag!=0)
-		{
+		{		
 			this.exp="÷";
 			this.flag=2;
 			
@@ -192,13 +212,15 @@ public class Desgin extends JFrame implements ActionListener {
 			else if(exp=="x") {answer=Double.parseDouble(x)*Double.parseDouble(y);}
 			else if(exp=="÷") {answer=Double.parseDouble(x)/Double.parseDouble(y);}
 			
-		
+			this.operation=x+exp+y+"="+Double.toString(answer);
+			history[++top]=operation;
 			this.x="";
 			this.y="";
 			this.flag=0;
 			this.exp="z";
+			l2.setText(operation);
 		
-		
+			this.i=top;
 		}
 		if(test=="C")
 		{
@@ -211,14 +233,26 @@ public class Desgin extends JFrame implements ActionListener {
 		}
 		
 		if(test==".")
-		{
+		{			
+
 			if(exp=="z")x=x+".";
-		
 			else y=y+".";
+		}
+		
+		
+		if(test=="next"&&i!=top+1) {
+			if(i==-1)i=top;
+			l2.setText(history[i++]);
+		}
+		
+		if(test=="prev"&&i!=-1) {
+			if(i==top+1)i=0;
+			l2.setText(history[i--]);
+
 		}
 		System.out.print(flag+" ");
 
-		
+
 		l1.setText(Double.toString(answer));
 		
 }
@@ -229,6 +263,7 @@ public class Desgin extends JFrame implements ActionListener {
 	private String getValue(String test)
 	{
 		if(exp=="z") {
+			this.operation="";
 			x=x+test;
 			answer=Double.parseDouble(x);
 			
